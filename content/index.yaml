@@ -1,0 +1,19 @@
+title: Example Website
+header:
+  - label: home
+    href: index.html
+blocks:
+  - type: subtitle
+    content: Subtitle
+  - type: post
+    content: Hello, this is an example text, utilizing "moo", the minimalistic static site generator based on YAML and uses the EJS template engine.
+    post_date: 2025-07-28
+    images:
+    - href: imagem2.png
+    - href: imagem3.png
+    links:
+    - href: https://github.com/jpmaciel22/moo
+      text: Github
+  - type: post
+    content: "Hi again, you can create posts with multiple links and multiple images... or none if you wish so."
+    post_date: 2025-07-28

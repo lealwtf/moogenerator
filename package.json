@@ -1,0 +1,27 @@
+{
+  "dependencies": {
+    "commander": "^14.0.0",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "nodemon": "^3.1.10",
+    "yaml": "^2.8.0"
+  },
+  "bin": {
+    "moo": "./bin/moo.js"
+  },
+  "name": "moo_ssg",
+  "version": "1.0.0",
+  "main": "ssg.js",
+  "scripts": {
+    "start": "node ./bin/moo.js",
+      "dev": "nodemon --watch content --watch templates --watch styles --ext yaml,yml,ejs,css --exec \"moo serve index\""
+  },
+  "keywords": [
+    "ssg",
+    "yaml",
+    "cli"
+  ],
+  "author": "jpmaciel22",
+  "license": "MIT",
+  "description": "Static website generator based on YAML content and rendering it in EJS"
+}

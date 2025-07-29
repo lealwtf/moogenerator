@@ -1,0 +1,105 @@
+body {
+    font: 1.1em/1.5em sans-serif;
+    max-width: 55em;
+    margin: 1em auto;
+    padding: 0 .6em;
+}
+
+code {
+    font: 1.1em/1.5em monospace;
+}
+
+h1, h2, h3 {
+    line-height: 1.2em;
+    text-align: center;
+}
+
+h4 {
+    line-height: 1.2em;
+}
+
+.header {
+    text-align: right;
+}
+
+img {
+    max-width: 80%;
+    display: block;
+    margin: .75em auto;
+    border: 1px solid black;
+}
+
+nav {
+    text-align: center;
+}
+
+footer {
+    text-align: center;
+    font: 0.7em/1.2em sans-serif;
+}
+
+table {
+    width: 100%;
+}
+
+table, td {
+    border-spacing: 1px;
+}
+
+td {
+    padding: 0.5em;
+}
+
+dt {
+    font-weight: bold;
+}
+
+ul, ol {
+    text-align: left;
+}
+
+figure {
+    margin: 0;
+}
+
+figcaption {
+    text-align: center;
+    font: 0.7em/1.2em sans-serif;
+    font-style: italic;
+    padding-left: 0.75em;
+    padding-right: 0.75em;
+}
+
+blockquote {
+    border-left: 1px solid black;
+    padding-left: 1em;
+    color: #777;
+}
+
+.fleuron {
+    text-align: center;
+    font: 2.5em/1em sans-serif;
+}
+
+.footnotes {
+    font: 0.7em/1.2em sans-serif;
+}
+
+.blognav {
+    display: flex;
+    justify-content: space-between;
+    font: 2em/1em sans-serif;
+}
+
+.blogtoc {
+    text-align: center;
+}
+
+.horbar {
+    max-width: 25%;
+}
+
+.codebox {
+    padding-left: 4em;
+}
+
