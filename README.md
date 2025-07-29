@@ -9,7 +9,7 @@
 ## Installation
 1. Clone the repository
 
-2.
+2. Install the dependencies
 ```bash
 npm i # add -g if you want it to be globally installed
 ```
