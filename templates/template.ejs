@@ -7,57 +7,63 @@
   <title>
     <%= title %>
   </title>
-  <link rel="stylesheet" href="/styles/style.css">
+  <% if(theme==light) {%>
+    <link rel="stylesheet" href="/styles/light.css">`
+    <% } %>
+      <% if(theme==dark) {%>
+        <link rel="stylesheet" href="/styles/dark.css">`
+        <% } %>
+
 </head>
 
 <body>
   <% if(blocks) { %>
-  <% for (const block of blocks) { %>
-    <% if (block.type==='subtitle' ) { %>
-      <header>
-        <h1 class="header">
-          <%= block.content %>
-        </h1>
-      </header>
-      <hr>
-      <nav>
-        <%for(const label of header) {%>
-          <a href="<%= label.href%>">
-            <%= label.label %>
-          </a>
-          <% if(header.length> 1) {%>
-            |
-            <%}%>
-              <% } %>
-      </nav>
-      <hr>
-      <main>
-        <% } else if (block.type==='post' ) { %>
-          <article class="post">
-            <h4>
-              <%= block.post_date%>
-            </h4>
-            <p>
-              <%= block.content %>
-            </p>
-            <% if (block.images) { %>
-              <% for(const image of block.images) {%>
-                <img src="/images/<%= image.href %>" alt="imagem do post">
+    <% for (const block of blocks) { %>
+      <% if (block.type==='subtitle' ) { %>
+        <header>
+          <h1 class="header">
+            <%= block.content %>
+          </h1>
+        </header>
+        <hr>
+        <nav>
+          <%for(const label of header) {%>
+            <a href="<%= label.href%>">
+              <%= label.label %>
+            </a>
+            <% if(header.length> 1) {%>
+              |
+              <%}%>
                 <% } %>
+        </nav>
+        <hr>
+        <main>
+          <% } else if (block.type==='post' ) { %>
+            <article class="post">
+              <h4>
+                <%= block.post_date%>
+              </h4>
+              <p>
+                <%= block.content %>
+              </p>
+              <% if (block.images) { %>
+                <% for(const image of block.images) {%>
+                  <img src="/images/<%= image.href %>" alt="imagem do post">
                   <% } %>
-                    <% if (block.links && block.links.length) { %>
-                      <div class="links">
-                        <% for (const link of block.links) { %>
-                          <a href="<%= link.href %>">
-                            <%= link.text %>
-                          </a>
-                          <% } %>
-                      </div>
-                      <% } %>
-          </article>
-          <hr>
+                    <% } %>
+                      <% if (block.links && block.links.length) { %>
+                        <div class="links">
+                          <% for (const link of block.links) { %>
+                            <a href="<%= link.href %>">
+                              <%= link.text %>
+                            </a>
+                            <% } %>
+                        </div>
+                        <% } %>
+            </article>
+            <hr>
+            <% } %>
+        </main>
+        <% } %>
           <% } %>
-      </main>
-      <% } %>
-      <% } %>
 </body>

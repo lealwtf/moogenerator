@@ -1,4 +1,5 @@
 title: Example Website
+theme: light
 header:
   - label: home
     href: index.html

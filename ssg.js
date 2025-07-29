@@ -17,6 +17,7 @@ function ssg(yamlPath) {
 
   const safeData = {
     title: data.title || "Sem título",
+    theme: data.theme || "light",
     header: data.header || [],
     blocks: data.blocks || []
   };
