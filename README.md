@@ -8,23 +8,26 @@
 
 ## Installation
 1. Clone the repository
-2. ```bash
+
+2.
+```bash
 npm i # add -g if you want it to be globally installed
 ```
 3. Build your website
-```
+
+```bash
 moo render <yaml-file>
 ```
 
 4. Serve it locally
 
-```
+```bash
 npm run dev
 ```
 
 5. Project Structure
 
-```
+```text
 moo/
 ├── content/         # YAML content files (e.g., index.yaml)
 ├── public/          # HTML/CSS/assets
