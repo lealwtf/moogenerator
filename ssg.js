@@ -28,7 +28,5 @@ function ssg(yamlPath) {
   }
 
   fs.writeFileSync(outputHTMLPath, html);
-  console.log('filename',fileName)
-  console.log('outputhtmlfile',outputHTMLPath)
 }
 module.exports = ssg;
