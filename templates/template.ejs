@@ -7,7 +7,7 @@
   <title>
     <%= title %>
   </title>
-  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/styles/style.css">
 </head>
 
 <body>
@@ -42,7 +42,7 @@
             </p>
             <% if (block.images) { %>
               <% for(const image of block.images) {%>
-                <img src="/<%= image.href %>" alt="imagem do post">
+                <img src="/images/<%= image.href %>" alt="imagem do post">
                 <% } %>
                   <% } %>
                     <% if (block.links && block.links.length) { %>
