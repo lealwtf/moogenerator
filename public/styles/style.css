@@ -3,13 +3,29 @@ body {
     max-width: 55em;
     margin: 1em auto;
     padding: 0 .6em;
+    color: cornsilk;
+    background: rgb(18, 17, 17);
+    background-color: var(--bg);
+    color: var(--fg);
+}
+
+:root {
+  --bg: white;
+  --fg: black;
+}
+
+html[data-theme='dark'] {
+  --bg: rgb(18, 17, 17);
+  --fg: cornsilk;
 }
 
 code {
     font: 1.1em/1.5em monospace;
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
     line-height: 1.2em;
     text-align: center;
 }
@@ -42,7 +58,8 @@ table {
     width: 100%;
 }
 
-table, td {
+table,
+td {
     border-spacing: 1px;
 }
 
@@ -54,7 +71,8 @@ dt {
     font-weight: bold;
 }
 
-ul, ol {
+ul,
+ol {
     text-align: left;
 }
 
@@ -102,4 +120,3 @@ blockquote {
 .codebox {
     padding-left: 4em;
 }
-
