@@ -3,8 +3,6 @@ body {
     max-width: 55em;
     margin: 1em auto;
     padding: 0 .6em;
-    color: cornsilk;
-    background: rgb(18, 17, 17);
     background-color: var(--bg);
     color: var(--fg);
 }
