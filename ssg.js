@@ -3,22 +3,31 @@ const path = require('path');
 const YAML = require('yaml');
 const ejs = require('ejs');
 
-function ssg(yamlPath){
-const templatePath = path.join(__dirname,'templates', 'template.ejs');
-const outputDir = path.join(__dirname, 'public');
-let nomeArquivo = yamlPath.split('\\');
-nomeArquivo = nomeArquivo[nomeArquivo.length - 1]
-const outputHTMLPath = path.join(outputDir, `${nomeArquivo}.html`);
+function ssg(yamlPath) {
+  const templatePath = path.join(__dirname, 'templates', 'template.ejs');
+  const outputDir = path.join(__dirname, 'public');
 
-const yamlContent = fs.readFileSync(`${yamlPath}.yaml`, 'utf8');
-const template = fs.readFileSync(templatePath, 'utf8');
-const data = YAML.parse(yamlContent);
-const html = ejs.render(template, data);
+  const fileName = path.basename(yamlPath, path.extname(yamlPath));
 
-if (!fs.existsSync(outputDir)) {
-  fs.mkdirSync(outputDir);
+  const outputHTMLPath = path.join(outputDir, `${fileName}.html`);
+
+  const yamlContent = fs.readFileSync(yamlPath, 'utf8');
+  const template = fs.readFileSync(templatePath, 'utf8');
+  const data = YAML.parse(yamlContent);
+
+  const safeData = {
+    title: data.title || "Sem título",
+    header: data.header || [],
+    blocks: data.blocks || []
+  };
+
+  const html = ejs.render(template, safeData);
+
+  if (!fs.existsSync(outputDir)) {
+    fs.mkdirSync(outputDir);
+  }
+
+  fs.writeFileSync(outputHTMLPath, html);
 }
 
-fs.writeFileSync(outputHTMLPath, html);
-}
 module.exports = ssg;

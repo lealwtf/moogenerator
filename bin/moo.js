@@ -1,16 +1,23 @@
-#!/usr/bin/env node
-
 const { program } = require('commander');
 const path = require('path');
+const fs = require('fs');
 const ssg = require('../ssg');
-const serve = require('../server')
+const serve = require('../server');
 
 program
-  .command('render <yaml>')
-  .description('Renders an YAML file into HTML')
-  .action((yamlPath) => {
-    const fullPath = path.resolve('content',yamlPath);
-    ssg(fullPath);
+  .command('render')
+  .description('Renderiza todos os arquivos YAML da pasta content/')
+  .action(() => {
+    const contentDir = path.resolve('content');
+    const files = fs.readdirSync(contentDir);
+
+    files.forEach((file) => {
+      if (file.endsWith('.yaml') || file.endsWith('.yml')) {
+        const fullPath = path.join(contentDir, file);
+        console.log(`Renderizando ${file}...`);
+        ssg(fullPath);
+      }
+    });
   });
 
 program

@@ -14,7 +14,8 @@
   "main": "ssg.js",
   "scripts": {
     "start": "node ./bin/moo.js",
-      "dev": "nodemon --watch content --watch templates --watch styles --ext yaml,yml,ejs,css --exec \"moo serve index\""
+      "build": "node bin/moo.js render index.yaml",
+      "dev": "nodemon"
   },
   "keywords": [
     "ssg",

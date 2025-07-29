@@ -11,6 +11,7 @@
 </head>
 
 <body>
+  <% if(blocks) { %>
   <% for (const block of blocks) { %>
     <% if (block.type==='subtitle' ) { %>
       <header>
@@ -57,5 +58,6 @@
           <hr>
           <% } %>
       </main>
+      <% } %>
       <% } %>
 </body>

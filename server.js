@@ -4,30 +4,24 @@ const fs = require('fs');
 const ssg = require('./ssg');
 
 function serve(yamlPath) {
-    const outputDir = path.join(__dirname, 'public');
+  const outputDir = path.join(__dirname, 'public');
 
-    let nomeArquivo = yamlPath.split('\\');
-    nomeArquivo = nomeArquivo[nomeArquivo.length - 1];
-    const outputHTMLPath = path.join(outputDir, `${nomeArquivo}.html`);
+  const fileName = path.basename(yamlPath, path.extname(yamlPath));
+  const outputHTMLPath = path.join(outputDir, `${fileName}.html`);
 
-    if (!fs.existsSync(outputHTMLPath)) {
-        console.log(`HTML file not found, creating ${outputHTMLPath}...`);
-        ssg(yamlPath);
-    }
+  if (!fs.existsSync(outputHTMLPath)) {
+    console.log(`HTML file not found. Creating ${outputHTMLPath}...`);
+    ssg(yamlPath);
+  }
 
-    const app = express();
-    const port = 3000;
+  const app = express();
+  const port = 3000;
 
-    app.use(express.static(outputDir));
+  app.use(express.static(outputDir));
 
-    // app.get('/', (req, res) => {
-    //     res.sendFile(outputHTMLPath);
-    // });
-
-    ssg(yamlPath)
-    app.listen(port, () => {
-        console.log(`Server running in: http://localhost:${port}/`);
-    });
+  app.listen(port, () => {
+    console.log(`Servidor rodando em http://localhost:${port}/${fileName}.html`);
+  });
 }
 
 module.exports = serve;

@@ -1,0 +1,5 @@
+{
+  "watch": ["content", "templates", "styles"],
+  "ext": "yaml,ejs,css",
+  "exec": "node bin/moo.js render"
+}
