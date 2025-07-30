@@ -16,13 +16,13 @@ npm i # add -g if you want it to be globally installed
 3. Build your website
 
 ```bash
-moo render <yaml-file>
+moo render
 ```
 
 4. Serve it locally
 
 ```bash
-npm run dev
+moo serve <yaml-file>
 ```
 
 5. Project Structure
