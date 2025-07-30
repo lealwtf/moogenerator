@@ -4,7 +4,7 @@ const YAML = require('yaml');
 const ejs = require('ejs');
 
 function ssg(yamlPath) {
-  const templatePath = path.join(__dirname, 'templates', 'template.ejs');
+  const templatePath = path.join(process.cwd(), 'templates', 'template.ejs');
 const outputDir = path.resolve(process.cwd(), 'public');
 
   const fileName = path.basename(yamlPath, path.extname(yamlPath));

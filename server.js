@@ -4,7 +4,7 @@ const fs = require('fs');
 const ssg = require('./ssg');
 
 function serve(yamlPath) {
-  const outputDir = path.join(__dirname, 'public');
+  const outputDir = path.join(process.cwd(), 'public');
 
   const fileName = path.basename(yamlPath, path.extname(yamlPath));
   const outputHTMLPath = path.join(outputDir, `${fileName}.html`);
