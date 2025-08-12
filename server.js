@@ -19,8 +19,22 @@ function serve(yamlPath) {
 
   app.use(express.static(outputDir));
 
+  
+    app.get('/', (req, res) => {
+    res.sendFile(outputHTMLPath);
+  });
+
+
   app.listen(port, () => {
-    console.log(`Servidor rodando em http://localhost:${port}/${fileName}.html`);
+   console.log(`
+  (__)  
+  (oo)  
+ /------\\/ 
+/ |    ||   
+*  /\\---/\\
+   ~~   ~~
+Moo! Serving at http://localhost:${port}
+`);
   });
 }
 
