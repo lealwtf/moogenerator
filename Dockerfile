@@ -11,7 +11,7 @@ COPY . .
 RUN npm install
 
 #render no html a partir do seu yaml
-RUN node bin/moo.js render index.yaml
+RUN node bin/moo.js render
 
 #abre porta 3000
 EXPOSE 3000

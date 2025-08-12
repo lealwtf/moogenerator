@@ -30,7 +30,7 @@ moo serve <yaml-file>
 ```text
 moo/
 ├── content/         # YAML content files (e.g., index.yaml)
-├── public/          # HTML/CSS/assets
+├── public/          # HTML/CSS/assets ( there is already an example file in there.)
 ├── templates/       # EJS template
 ├── bin/             # CLI scripts
 └── ...              # Config files
