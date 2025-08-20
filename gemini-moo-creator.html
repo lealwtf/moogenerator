@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moo + Gemini - Criador de Páginas Inteligente</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #f59e0b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --dark: #1f2937;
+            --light: #f8fafc;
+            --gray: #6b7280;
+            --border: #e5e7eb;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--dark);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .main-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .card-header h2 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-body {
+            padding: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: var(--light);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn:disabled {
+            background: var(--gray);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+        }
+
+        .btn-secondary:hover {
+            background: #d97706;
+            box-shadow: 0 10px 25px rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-success {
+            background: var(--success);
+        }
+
+        .btn-success:hover {
+            background: #059669;
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            border-left: 4px solid;
+        }
+
+        .alert-info {
+            background: #eff6ff;
+            border-color: var(--primary);
+            color: #1e40af;
+        }
+
+        .alert-success {
+            background: #ecfdf5;
+            border-color: var(--success);
+            color: #065f46;
+        }
+
+        .alert-error {
+            background: #fef2f2;
+            border-color: var(--danger);
+            color: #991b1b;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .spinner {
+            border: 4px solid var(--border);
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .result-section {
+            background: var(--light);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .result-section h3 {
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .code-block {
+            background: var(--dark);
+            color: #e5e7eb;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 4rem;
+            color: white;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🐮 Moo + Gemini</h1>
+            <p>Crie páginas web incríveis usando IA e o gerador de sites estáticos Moo</p>
+        </header>
+
+        <div class="main-card">
+            <div class="card-header">
+                <h2>🔑 Configuração da API</h2>
+                <p>Insira seu token da API Gemini para começar</p>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="apiKey" class="form-label">Token da API Gemini</label>
+                    <input type="password" id="apiKey" class="form-input" placeholder="Digite seu token da API Gemini aqui...">
+                </div>
+                
+                <div class="alert alert-info">
+                    <strong>💡 Dica:</strong> Para obter um token da API Gemini, acesse o 
+                    <a href="https://makersuite.google.com/app/apikey" target="_blank" style="color: inherit; text-decoration: underline;">Google AI Studio</a>.
+                </div>
+
+                <div class="btn-group">
+                    <button id="testConnection" class="btn btn-secondary">
+                        🧪 Testar Conexão
+                    </button>
+                    <button id="saveKey" class="btn btn-success">
+                        💾 Salvar Token
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-card">
+            <div class="card-header">
+                <h2>✨ Criar Nova Página</h2>
+                <p>Descreva o que você quer e a IA criará uma página completa</p>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="pageDescription" class="form-label">Descrição da Página</label>
+                    <textarea id="pageDescription" class="form-input form-textarea" placeholder="Descreva o tipo de página que você quer criar. Por exemplo: 'Uma página de blog sobre tecnologia com design moderno e responsivo'"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="pageTitle" class="form-label">Título da Página</label>
+                    <input type="text" id="pageTitle" class="form-input" placeholder="Ex: Meu Blog de Tecnologia">
+                </div>
+
+                <div class="form-group">
+                    <label for="pageTheme" class="form-label">Tema</label>
+                    <select id="pageTheme" class="form-input">
+                        <option value="light">Claro</option>
+                        <option value="dark">Escuro</option>
+                    </select>
+                </div>
+
+                <button id="createPage" class="btn btn-primary" disabled>
+                    🚀 Criar Página com IA
+                </button>
+
+                <div id="loading" class="loading">
+                    <div class="spinner"></div>
+                    <p>Criando sua página com IA Gemini...</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="resultSection" class="result-section" style="display: none;">
+            <h3>🎉 Página Criada com Sucesso!</h3>
+            <div id="resultContent"></div>
+        </div>
+
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">🤖</div>
+                <h3>IA Gemini 2.5 Pro</h3>
+                <p>Utilize a mais avançada IA do Google para criar conteúdo único e relevante</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🐮</div>
+                <h3>Gerador Moo</h3>
+                <p>Transforme o conteúdo da IA em páginas web estáticas usando o sistema Moo</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎨</div>
+                <h3>Design Responsivo</h3>
+                <p>Páginas automaticamente otimizadas para todos os dispositivos</p>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>Powered by Moo SSG + Google Gemini AI</p>
+        </footer>
+    </div>
+
+    <script>
+        class GeminiMooCreator {
+            constructor() {
+                this.apiKey = '';
+                this.init();
+            }
+
+            init() {
+                this.loadSavedKey();
+                this.bindEvents();
+                this.updateCreateButton();
+            }
+
+            bindEvents() {
+                document.getElementById('testConnection').addEventListener('click', () => this.testConnection());
+                document.getElementById('saveKey').addEventListener('click', () => this.saveKey());
+                document.getElementById('createPage').addEventListener('click', () => this.createPage());
+                
+                document.getElementById('apiKey').addEventListener('input', () => this.updateCreateButton());
+                document.getElementById('pageDescription').addEventListener('input', () => this.updateCreateButton());
+                document.getElementById('pageTitle').addEventListener('input', () => this.updateCreateButton());
+            }
+
+            loadSavedKey() {
+                const savedKey = localStorage.getItem('gemini_api_key');
+                if (savedKey) {
+                    this.apiKey = savedKey;
+                    document.getElementById('apiKey').value = savedKey;
+                }
+            }
+
+            saveKey() {
+                const keyInput = document.getElementById('apiKey');
+                const key = keyInput.value.trim();
+                
+                if (!key) {
+                    this.showAlert('Por favor, insira um token válido.', 'error');
+                    return;
+                }
+
+                this.apiKey = key;
+                localStorage.setItem('gemini_api_key', key);
+                this.showAlert('Token salvo com sucesso!', 'success');
+                this.updateCreateButton();
+            }
+
+            async testConnection() {
+                if (!this.apiKey) {
+                    this.showAlert('Por favor, insira um token primeiro.', 'error');
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${this.apiKey}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            contents: [{
+                                parts: [{
+                                    text: "Olá! Teste de conexão com a API Gemini."
+                                }]
+                            }]
+                        })
+                    });
+
+                    if (response.ok) {
+                        this.showAlert('✅ Conexão com a API Gemini estabelecida com sucesso!', 'success');
+                    } else {
+                        this.showAlert('❌ Erro na conexão. Verifique seu token.', 'error');
+                    }
+                } catch (error) {
+                    this.showAlert('❌ Erro na conexão: ' + error.message, 'error');
+                }
+            }
+
+            async createPage() {
+                if (!this.apiKey) {
+                    this.showAlert('Por favor, insira um token válido.', 'error');
+                    return;
+                }
+
+                const description = document.getElementById('pageDescription').value.trim();
+                const title = document.getElementById('pageTitle').value.trim();
+                const theme = document.getElementById('pageTheme').value;
+
+                if (!description || !title) {
+                    this.showAlert('Por favor, preencha todos os campos obrigatórios.', 'error');
+                    return;
+                }
+
+                this.showLoading(true);
+
+                try {
+                    const prompt = this.createPrompt(description, title, theme);
+                    const response = await this.callGeminiAPI(prompt);
+                    
+                    if (response) {
+                        this.processGeminiResponse(response, title, theme);
+                    }
+                } catch (error) {
+                    this.showAlert('❌ Erro ao criar página: ' + error.message, 'error');
+                } finally {
+                    this.showLoading(false);
+                }
+            }
+
+            createPrompt(description, title, theme) {
+                return `Crie uma página web completa usando o sistema Moo (um gerador de sites estáticos baseado em YAML e EJS).
+
+DESCRIÇÃO DA PÁGINA: ${description}
+TÍTULO: ${title}
+TEMA: ${theme}
+
+Crie:
+1. Um arquivo YAML de conteúdo (content.yaml) seguindo a estrutura do Moo
+2. Um template EJS personalizado (template.ejs) se necessário
+3. Um arquivo CSS personalizado (style.css) se necessário
+
+ESTRUTURA YAML REQUERIDA:
+- template: nome_do_template
+- title: título da página
+- theme: tema (light/dark)
+- blocks: array de blocos de conteúdo
+
+EXEMPLO DE ESTRUTURA:
+- type: subtitle (para títulos)
+- type: post (para posts/conteúdo)
+- type: section (para seções)
+
+IMPORTANTE: 
+- Use apenas HTML, CSS e YAML válidos
+- Mantenha o design moderno e responsivo
+- Inclua elementos visuais atrativos
+- Siga as melhores práticas de UX/UI
+- Use cores e tipografia apropriadas para o tema escolhido
+
+Retorne apenas o código YAML válido, sem explicações extras.`;
+            }
+
+            async callGeminiAPI(prompt) {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${this.apiKey}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [{
+                                text: prompt
+                            }]
+                        }],
+                        generationConfig: {
+                            temperature: 0.7,
+                            topK: 40,
+                            topP: 0.95,
+                            maxOutputTokens: 2048,
+                        }
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Erro na API: ${response.status}`);
+                }
+
+                const data = await response.json();
+                return data.candidates[0].content.parts[0].text;
+            }
+
+            processGeminiResponse(response, title, theme) {
+                try {
+                    // Extrair o YAML da resposta
+                    const yamlMatch = response.match(/```yaml\n([\s\S]*?)\n```/);
+                    const yamlContent = yamlMatch ? yamlMatch[1] : response;
+
+                    // Criar arquivos para download
+                    this.createDownloadFiles(yamlContent, title, theme);
+                    
+                    // Mostrar resultado
+                    this.showResult(yamlContent, title, theme);
+                    
+                } catch (error) {
+                    this.showAlert('❌ Erro ao processar resposta da IA: ' + error.message, 'error');
+                }
+            }
+
+            createDownloadFiles(yamlContent, title, theme) {
+                // Criar arquivo YAML para download
+                const yamlBlob = new Blob([yamlContent], { type: 'text/yaml' });
+                const yamlUrl = URL.createObjectURL(yamlBlob);
+                
+                const yamlLink = document.createElement('a');
+                yamlLink.href = yamlUrl;
+                yamlLink.download = `${title.toLowerCase().replace(/\s+/g, '-')}.yaml`;
+                yamlLink.textContent = '📥 Baixar arquivo YAML';
+                yamlLink.className = 'btn btn-success';
+                yamlLink.style.marginRight = '1rem';
+                
+                // Criar arquivo HTML de exemplo
+                const htmlContent = this.createExampleHTML(title, theme);
+                const htmlBlob = new Blob([htmlContent], { type: 'text/html' });
+                const htmlUrl = URL.createObjectURL(htmlBlob);
+                
+                const htmlLink = document.createElement('a');
+                htmlLink.href = htmlUrl;
+                htmlLink.download = `${title.toLowerCase().replace(/\s+/g, '-')}.html`;
+                htmlLink.textContent = '📥 Baixar HTML de exemplo';
+                htmlLink.className = 'btn btn-secondary';
+                
+                // Adicionar links ao resultado
+                const downloadSection = document.createElement('div');
+                downloadSection.style.marginTop = '1rem';
+                downloadSection.appendChild(yamlLink);
+                downloadSection.appendChild(htmlLink);
+                
+                document.getElementById('resultContent').appendChild(downloadSection);
+            }
+
+            createExampleHTML(title, theme) {
+                return `<!DOCTYPE html>
+<html lang="pt-BR" data-theme="${theme}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${title}</title>
+    <style>
+        :root {
+            --bg: ${theme === 'dark' ? '#1f2937' : '#ffffff'};
+            --fg: ${theme === 'dark' ? '#f8fafc' : '#1f2937'};
+            --primary: #6366f1;
+            --border: ${theme === 'dark' ? '#374151' : '#e5e7eb'};
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--fg);
+            margin: 0;
+            padding: 2rem;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .content {
+            background: ${theme === 'dark' ? '#374151' : '#f9fafb'};
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 3rem;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>${title}</h1>
+        <div class="content">
+            <p>Esta é uma página de exemplo criada com Moo + Gemini AI.</p>
+            <p>Use o arquivo YAML baixado com o sistema Moo para gerar a página completa.</p>
+        </div>
+        <div class="footer">
+            <p>Powered by Moo SSG + Google Gemini AI</p>
+        </div>
+    </div>
+</body>
+</html>`;
+            }
+
+            showResult(yamlContent, title, theme) {
+                const resultSection = document.getElementById('resultSection');
+                const resultContent = document.getElementById('resultContent');
+                
+                resultContent.innerHTML = `
+                    <h4>📄 Conteúdo YAML Gerado:</h4>
+                    <div class="code-block">${this.escapeHtml(yamlContent)}</div>
+                    
+                    <h4 style="margin-top: 1.5rem;">📋 Instruções de Uso:</h4>
+                    <ol style="margin-left: 1.5rem; line-height: 1.8;">
+                        <li>Salve o arquivo YAML na pasta <code>content/</code> do seu projeto Moo</li>
+                        <li>Execute o comando <code>moo render</code> para gerar a página</li>
+                        <li>Ou use <code>moo serve</code> para visualizar em tempo real</li>
+                        <li>A página será gerada na pasta <code>public/</code></li>
+                    </ol>
+                `;
+                
+                resultSection.style.display = 'block';
+                resultSection.scrollIntoView({ behavior: 'smooth' });
+            }
+
+            escapeHtml(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+
+            showLoading(show) {
+                document.getElementById('loading').style.display = show ? 'block' : 'none';
+                document.getElementById('createPage').disabled = show;
+            }
+
+            showAlert(message, type) {
+                const alertDiv = document.createElement('div');
+                alertDiv.className = `alert alert-${type}`;
+                alertDiv.textContent = message;
+                
+                const cardBody = document.querySelector('.card-body');
+                cardBody.insertBefore(alertDiv, cardBody.firstChild);
+                
+                setTimeout(() => {
+                    alertDiv.remove();
+                }, 5000);
+            }
+
+            updateCreateButton() {
+                const apiKey = document.getElementById('apiKey').value.trim();
+                const description = document.getElementById('pageDescription').value.trim();
+                const title = document.getElementById('pageTitle').value.trim();
+                
+                const createButton = document.getElementById('createPage');
+                createButton.disabled = !(apiKey && description && title);
+            }
+        }
+
+        // Inicializar a aplicação
+        document.addEventListener('DOMContentLoaded', () => {
+            new GeminiMooCreator();
+        });
+    </script>
+</body>
+</html>
