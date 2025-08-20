@@ -1,35 +1,12 @@
-<!DOCTYPE html>
-<html lang="en" data-theme="<%= theme %>">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>
-    <%= title %>
-  </title>
-  <link rel="stylesheet" href="/styles/style.css">
-
-</head>
-
-<body>
-  <% if(blocks) { %>
-    <% for (const block of blocks) { %>
+<%# layout = 'default' %>
+  <% if(page.blocks) { %>
+    <% for (const block of page.blocks) { %>
       <% if (block.type==='subtitle' ) { %>
         <header>
           <h1 class="header">
             <%= block.content %>
           </h1>
         </header>
-        <hr>
-        <nav>
-          <%for(const label of header) {%>
-            <a href="<%= label.href%>">
-              <%= label.label %>
-            </a>
-            <% if(header.length> 1) {%>
-              |
-              <%}%>
-                <% } %>
-        </nav>
         <hr>
         <main>
           <% } else if (block.type==='post' ) { %>
@@ -42,7 +19,7 @@
               </p>
               <% if (block.images) { %>
                 <% for(const image of block.images) {%>
-                  <img src="/images/<%= image.href %>" alt="imagem do post">
+                  <img src="images/<%= image.href %>" alt="imagem do post">
                   <% } %>
                     <% } %>
                       <% if (block.links && block.links.length) { %>
@@ -60,5 +37,3 @@
         </main>
         <% } %>
           <% } %>
-</body>
-</html>

@@ -1,0 +1,11 @@
+# _config.yaml
+site_title: "My Moo Blog"
+site_description: "A blog built with a powerful custom SSG"
+theme: dark
+navigation:
+  - label: Home
+    href: index.html
+  - label: About
+    href: index2.html
+  - label: GitHub
+    href: https://github.com/jpmaciel22/moo
