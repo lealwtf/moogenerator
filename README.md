@@ -1,4 +1,4 @@
-# moo
+![moo](logo2.png)
 ## the minimalistic YAML based SSG
 
 ## 🐄 Features
