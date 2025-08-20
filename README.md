@@ -18,7 +18,7 @@ Um Static Site Generator minimalista, pensado em developer experience, construí
 git clone https://github.com/jpmaciel22/moo.git
 
 # Entre na pasta
-cd moo-ssg
+cd moo
 
 # Instale as dependências
 npm install
