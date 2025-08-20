@@ -15,7 +15,7 @@ Um Static Site Generator minimalista, pensado em developer experience, construí
 
 ```bash
 # Clone o repositório
-git clone https://github.com/seu-usuario/moo-ssg.git
+git clone https://github.com/jpmaciel22/moo.git
 
 # Entre na pasta
 cd moo-ssg
