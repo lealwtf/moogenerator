@@ -20,13 +20,19 @@ function ssg(yamlPath) {
   const outputHTMLPath = path.join(outputDir, `${fileName}.html`);
 
   const yamlContent = fs.readFileSync(yamlPath, 'utf8');
-  const data = YAML.parse(yamlContent);
+  let data;
+  try {
+    data = YAML.parse(yamlContent);
+  } catch (err) {
+    console.error(`Error parsing YAML file ${yamlPath}:`, err.message);
+    return;
+  }
 
   if (!data.template) {
     console.error(`Error in ${yamlPath}: The required 'template' field is missing.`);
     return;
   }
-  const templateName = data.template+'.ejs' || 'default.ejs'; 
+  const templateName = data.template ? data.template + '.ejs' : 'default.ejs';
   const templatePath = path.join(process.cwd(), 'templates', templateName);
 
   if (!fs.existsSync(templatePath)) {

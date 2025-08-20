@@ -11,7 +11,17 @@ function serve(yamlPath) {
 
   if (!fs.existsSync(outputHTMLPath)) {
     console.log(`HTML file not found. Creating ${outputHTMLPath}...`);
-    ssg(yamlPath);
+    try {
+      ssg(yamlPath);
+      // Verificar se o arquivo foi realmente criado
+      if (!fs.existsSync(outputHTMLPath)) {
+        console.error('Failed to create HTML file');
+        process.exit(1);
+      }
+    } catch (error) {
+      console.error('Error generating HTML:', error.message);
+      process.exit(1);
+    }
   }
 
   const app = express();
@@ -19,9 +29,15 @@ function serve(yamlPath) {
 
   app.use(express.static(outputDir));
 
+  // Validação de segurança para evitar path traversal
+  const safePath = path.resolve(outputHTMLPath);
+  if (!safePath.startsWith(path.resolve(outputDir))) {
+    console.error('Invalid file path detected');
+    process.exit(1);
+  }
   
-    app.get('/', (req, res) => {
-    res.sendFile(outputHTMLPath);
+  app.get('/', (req, res) => {
+    res.sendFile(safePath);
   });
 
 
