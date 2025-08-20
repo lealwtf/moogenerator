@@ -4,14 +4,14 @@ const YAML = require('yaml');
 const ejs = require('ejs');
 
 function ssg(yamlPath) {
-  const configPath = path.join(process.cwd(), '_config.yaml');
+  const configPath = path.join(process.cwd(), 'config.yaml');
   let globalConfig = {};
   if (fs.existsSync(configPath)) {
     try {
       const configContent = fs.readFileSync(configPath, 'utf8');
       globalConfig = YAML.parse(configContent);
     } catch (err) {
-      console.error('Error parsing _config.yaml:', err);
+      console.error('Error parsing config.yaml:', err);
     }
   }
 
@@ -44,7 +44,7 @@ function ssg(yamlPath) {
     }
   };
 
-  const layoutsDir = path.join(process.cwd(), '_layouts');
+  const layoutsDir = path.join(process.cwd(), 'layouts');
   const html = renderWithLayout(template, safeData, layoutsDir);
 
   if (!fs.existsSync(outputDir)) {
